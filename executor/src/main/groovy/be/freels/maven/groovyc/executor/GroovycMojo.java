@@ -1,6 +1,9 @@
 package be.freels.maven.groovyc.executor;
 
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
+
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,4 +22,6 @@ public interface GroovycMojo {
     String getTargetCompatibility();
 
     boolean isDebug();
+
+    List getClasspath() throws DependencyResolutionRequiredException;
 }

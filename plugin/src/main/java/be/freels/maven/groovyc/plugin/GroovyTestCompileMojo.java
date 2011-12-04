@@ -1,6 +1,9 @@
 package be.freels.maven.groovyc.plugin;
 
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
+
 import java.io.File;
+import java.util.List;
 
 /**
  * @goal testCompileGroovy
@@ -9,7 +12,7 @@ import java.io.File;
  */
 public class GroovyTestCompileMojo extends AbstractGroovyMojo {
     /**
-     * @parameter expression="${baseDir}/src/test/groovy"
+     * @parameter expression="src/test/groovy"
      * @required
      */
     private File testSrcDir;
@@ -31,5 +34,9 @@ public class GroovyTestCompileMojo extends AbstractGroovyMojo {
 
     public File getTargetDir() {
         return testOutputDir;
+    }
+
+    public List getClasspath() throws DependencyResolutionRequiredException {
+        return project.getTestClasspathElements();
     }
 }

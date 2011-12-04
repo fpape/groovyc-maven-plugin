@@ -22,19 +22,29 @@ public abstract class AbstractGroovyMojo extends AbstractMojo implements Groovyc
      * @required
      * @readonly
      */
-    private MavenProject project;
+    protected MavenProject project;
 
 
     /**
      * run in debug mode
      *
-     * @parameter expression="${false}"
+     * @parameter expression="false"
      * @required
-     * @readonly
      */
     private boolean debug;
 
+
+    /**
+     *
+     *  @parameter expression="1.5"
+     *  @required
+     */
     private String sourceCompatibility;
+    /**
+     *
+     *  @parameter expression="1.5"
+     *  @required
+     */
     private String targetCompatibility;
 
 
@@ -55,7 +65,8 @@ public abstract class AbstractGroovyMojo extends AbstractMojo implements Groovyc
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        new GroovyCompilerExecutor(this, getExecutorName());
+        GroovyCompilerExecutor gce = new GroovyCompilerExecutor(this, getExecutorName());
+        gce.doGroovyCompile();
     }
 
 

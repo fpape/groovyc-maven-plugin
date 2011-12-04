@@ -1,6 +1,9 @@
 package be.freels.maven.groovyc.plugin;
 
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
+
 import java.io.File;
+import java.util.List;
 
 /**
  * @goal compileGroovy
@@ -9,7 +12,7 @@ import java.io.File;
  */
 public class GroovyCompileMojo extends AbstractGroovyMojo {
     /**
-     * @parameter expression="${baseDir}/src/main/groovy"
+     * @parameter expression="src/main/groovy"
      * @required
      */
     private File mainSrcDir;
@@ -31,5 +34,9 @@ public class GroovyCompileMojo extends AbstractGroovyMojo {
 
     public File getTargetDir() {
         return mainOutputDir;
+    }
+
+    public List getClasspath() throws DependencyResolutionRequiredException {
+        return project.getCompileClasspathElements();
     }
 }
