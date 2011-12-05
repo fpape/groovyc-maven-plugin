@@ -1,6 +1,8 @@
 package be.freels.maven.groovyc.plugin;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
 import java.util.List;
@@ -23,20 +25,22 @@ public class GroovyCompileMojo extends AbstractGroovyMojo {
      */
     private File mainOutputDir;
 
-    @Override
-    protected String getExecutorName() {
-        return "groovyCompile";
-    }
 
-    public File getSrcDir() {
+    protected File getSrcDir() {
         return mainSrcDir;
     }
 
-    public File getTargetDir() {
+    protected File getTargetDir() {
         return mainOutputDir;
     }
 
-    public List getClasspath() throws DependencyResolutionRequiredException {
+    protected List getClasspath() throws DependencyResolutionRequiredException {
         return project.getCompileClasspathElements();
+    }
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        project.addCompileSourceRoot(mainSrcDir.getPath());
+        super.execute();
     }
 }

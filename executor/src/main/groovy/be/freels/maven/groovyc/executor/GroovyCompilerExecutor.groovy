@@ -12,26 +12,19 @@ import org.apache.maven.plugin.logging.SystemStreamLog
  */
 class GroovyCompilerExecutor {
     private Log log = new SystemStreamLog()
-    private GroovycMojo mojo
-    private String executorName
 
-    GroovyCompilerExecutor(GroovycMojo mojo, String executorName) {
-        this.mojo = mojo
-        this.executorName = executorName
-    }
-
-    def doGroovyCompile() {
-        if (!mojo.srcDir.exists()) {
-            log.info("srcDir: '$mojo.srcDir' does not exist, will not compile groovy sources")
+    def doGroovyCompile(GroovycConfiguration groovycConfig) {
+        if (!groovycConfig.srcDir.exists()) {
+            log.info("srcDir: '$groovycConfig.srcDir' does not exist, skipping groovy compile")
             return;
         }
 
         new AntBuilder(new AntProject()).sequential {
             taskdef name: "groovyc", classname: "org.codehaus.groovy.ant.Groovyc"
-            groovyc srcdir: "$mojo.srcDir.absolutePath", destdir: "$mojo.targetDir.absolutePath", {
-                javac source: mojo.sourceCompatibility, target: mojo.targetCompatibility, debug: mojo.debug ? 'on' : 'off'
+            groovyc srcdir: "$groovycConfig.srcDir.absolutePath", destdir: "$groovycConfig.targetDir.absolutePath", listfiles: groovycConfig.listFiles ? 'yes' : 'no', {
+                javac source: groovycConfig.sourceCompatibility, target: groovycConfig.targetCompatibility, debug: groovycConfig.debug ? 'on' : 'off'
                 classpath {
-                    mojo.classpath.each {
+                    groovycConfig.classpath.each {
                         pathelement location: "$it"
                     }
                 }

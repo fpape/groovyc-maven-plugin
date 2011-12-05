@@ -1,6 +1,8 @@
 package be.freels.maven.groovyc.plugin;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
 import java.util.List;
@@ -11,6 +13,13 @@ import java.util.List;
  * @phase test-compile
  */
 public class GroovyTestCompileMojo extends AbstractGroovyMojo {
+    /**
+     * Set this to 'true' to bypass unit tests entirely.
+     * Its use is NOT RECOMMENDED, but quite convenient on occasion.
+     *
+     * @parameter expression="${maven.test.skip}"
+     */
+    private boolean skip;
     /**
      * @parameter expression="src/test/groovy"
      * @required
@@ -23,20 +32,25 @@ public class GroovyTestCompileMojo extends AbstractGroovyMojo {
      */
     private File testOutputDir;
 
-    @Override
-    protected String getExecutorName() {
-        return "groovyTestCompile";
-    }
-
-    public File getSrcDir() {
+    protected File getSrcDir() {
         return testSrcDir;
     }
 
-    public File getTargetDir() {
+    protected File getTargetDir() {
         return testOutputDir;
     }
 
-    public List getClasspath() throws DependencyResolutionRequiredException {
+    protected List getClasspath() throws DependencyResolutionRequiredException {
         return project.getTestClasspathElements();
     }
+
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        if (skip) {
+            getLog().info("Not compiling groovy test sources");
+        } else {
+            project.addTestCompileSourceRoot(testSrcDir.getPath());
+            super.execute();
+        }
+    }
+
 }
