@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * @goal compileGroovy
+ * @threadSafe
  * @requiresDependencyResolution compile
  * @phase compile
  */

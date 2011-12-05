@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * @goal testCompileGroovy
+ * @threadSafe
  * @requiresDependencyResolution test
  * @phase test-compile
  */
@@ -45,10 +46,10 @@ public class GroovyTestCompileMojo extends AbstractGroovyMojo {
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        project.addTestCompileSourceRoot(testSrcDir.getPath());
         if (skip) {
             getLog().info("Not compiling groovy test sources");
         } else {
-            project.addTestCompileSourceRoot(testSrcDir.getPath());
             super.execute();
         }
     }
