@@ -21,7 +21,7 @@ class GroovyCompilerExecutor {
 
         new AntBuilder(new AntProject()).sequential {
             taskdef name: "groovyc", classname: "org.codehaus.groovy.ant.Groovyc"
-            groovyc srcdir: "$groovycConfig.srcDir.absolutePath", destdir: "$groovycConfig.targetDir.absolutePath", listfiles: groovycConfig.listFiles ? 'yes' : 'no', {
+            groovyc srcdir: "$groovycConfig.srcDir.absolutePath", destdir: "$groovycConfig.targetDir.absolutePath", listfiles: "$groovycConfig.listFiles", {
                 javac source: groovycConfig.sourceCompatibility, target: groovycConfig.targetCompatibility, debug: groovycConfig.debug ? 'on' : 'off'
                 classpath {
                     groovycConfig.classpath.each {

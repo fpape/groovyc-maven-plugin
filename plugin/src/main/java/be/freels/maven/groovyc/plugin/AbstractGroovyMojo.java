@@ -83,6 +83,7 @@ public abstract class AbstractGroovyMojo extends AbstractMojo {
                     .withSourceCompatibility(getSourceCompatibility())
                     .withTargetCompatibility(getTargetCompatibility())
                     .withDebug(isDebug())
+                    .withListFiles(listFiles)
                     .withClasspath(getClasspath())
                     .build();
 
