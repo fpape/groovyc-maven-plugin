@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.codehaus.groovyc</groupId>
         <artifactId>groovyc-maven-plugin-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.1.0</version>
     </parent>
     <artifactId>groovyc-maven-executor</artifactId>
     <packaging>jar</packaging>
@@ -53,16 +52,14 @@
                         <phase>compile</phase>
                         <configuration>
                             <tasks>
-                                <mkdir dir="${basedir}/src/main/groovy"/>
-                                <taskdef name="groovyc"
-                                         classname="org.codehaus.groovy.ant.Groovyc">
-                                    <classpath refid="maven.compile.classpath"/>
+                                <mkdir dir="${basedir}/src/main/groovy" />
+                                <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+                                    <classpath refid="maven.compile.classpath" />
                                 </taskdef>
-                                <mkdir dir="${project.build.outputDirectory}"/>
-                                <groovyc destdir="${project.build.outputDirectory}"
-                                         srcdir="${basedir}/src/main/groovy/" listfiles="true">
-                                    <javac source="1.5" target="1.5"/>
-                                    <classpath refid="maven.compile.classpath"/>
+                                <mkdir dir="${project.build.outputDirectory}" />
+                                <groovyc destdir="${project.build.outputDirectory}" srcdir="${basedir}/src/main/groovy/" listfiles="true">
+                                    <javac source="1.5" target="1.5" />
+                                    <classpath refid="maven.compile.classpath" />
                                 </groovyc>
                             </tasks>
                         </configuration>
