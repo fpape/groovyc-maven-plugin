@@ -11,7 +11,7 @@
         <mavenVersion>2.0</mavenVersion>
     </properties>
     <scm>
-        <connection>scm:git:ssh://github.com:fpape/groovyc-maven-plugin.git</connection>
+        <connection>scm:git:git://github.com/fpape/groovyc-maven-plugin.git</connection>
     </scm>
     <modules>
         <module>executor</module>
