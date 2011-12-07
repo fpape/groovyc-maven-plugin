@@ -30,6 +30,8 @@ class GroovycConfiguration {
     String targetCompatibility
     boolean listFiles
     boolean debug
+    boolean stacktrace
+    boolean failonerror
     List classpath
 
     public static Builder builder() {
@@ -66,6 +68,16 @@ class GroovycConfiguration {
 
         Builder withListFiles(boolean listFiles) {
             config.listFiles = listFiles
+            return this
+        }
+
+        Builder withStacktrace(boolean stacktrace) {
+            config.stacktrace = stacktrace
+            return this
+        }
+
+        Builder withFailonerror(boolean failonerror) {
+            config.failonerror = failonerror
             return this
         }
 

@@ -46,7 +46,7 @@ public abstract class AbstractGroovyMojo extends AbstractMojo {
 
 
     /**
-     * run in debug mode
+     * run in debug mode: defaults to false
      *
      * @parameter expression="false"
      * @required
@@ -54,12 +54,28 @@ public abstract class AbstractGroovyMojo extends AbstractMojo {
     private boolean debug;
 
     /**
-     * Indicates whether the source files to be compiled will be listed; defaults to no.
+     * Indicates whether the source files to be compiled will be listed; defaults to false
      *
      * @parameter expression="false"
      * @required
      */
     private boolean listFiles;
+
+    /**
+     * if true each compile error message will contain a stacktrace: defaults to false
+     *
+     * @parameter expression="false"
+     * @required
+     */
+    private boolean stacktrace;
+
+    /**
+     * Indicates whether compilation errors will fail the build; defaults to true
+     *
+     * @parameter expression="true"
+     * @required
+     */
+    private boolean failonerror;
 
 
     /**
@@ -100,6 +116,7 @@ public abstract class AbstractGroovyMojo extends AbstractMojo {
                     .withTargetCompatibility(getTargetCompatibility())
                     .withDebug(isDebug())
                     .withListFiles(listFiles)
+                    .withStacktrace(stacktrace)
                     .withClasspath(getClasspath())
                     .build();
 
