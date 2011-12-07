@@ -3,7 +3,7 @@
     <groupId>org.codehaus.groovyc</groupId>
     <artifactId>groovyc-maven-plugin-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.1</version>
     <name>groovyc-maven-plugin-parent Maven Mojo</name>
     <url>http://maven.apache.org</url>
     <properties>
