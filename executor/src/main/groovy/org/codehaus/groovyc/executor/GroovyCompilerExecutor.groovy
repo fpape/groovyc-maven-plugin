@@ -30,14 +30,27 @@ class GroovyCompilerExecutor {
     private Log log = new SystemStreamLog()
 
     def doGroovyCompile(GroovycConfiguration groovycConfig) {
-        if (!groovycConfig.srcDir.exists()) {
-            log.info("srcDir: '$groovycConfig.srcDir' does not exist, skipping groovy compile")
-            return;
+        File srcDir = groovycConfig.srcDir
+        if (!srcDir.exists()) {
+            log.info("srcDir: '$srcDir ' does not exist, skipping groovy compile")
+            return
+        }
+
+        File targetDir = groovycConfig.targetDir
+        if (!targetDir.exists()) {
+            log.debug("targetDir: '$targetDir' does not exist -> creating targetDir")
+            boolean mkdirSuccess = targetDir.mkdirs()
+            if (!mkdirSuccess) {
+                log.info("creating targetDir: '$targetDir' failed, skipping groovy compile")
+                return
+            }
+
+            log.debug("targetDir created")
         }
 
         new AntBuilder(new AntProject()).sequential {
             taskdef name: "groovyc", classname: "org.codehaus.groovy.ant.Groovyc"
-            groovyc srcdir: "$groovycConfig.srcDir.absolutePath", destdir: "$groovycConfig.targetDir.absolutePath", listfiles: "$groovycConfig.listFiles", {
+            groovyc srcdir: "$srcDir.absolutePath", destdir: "$targetDir.absolutePath", listfiles: "$groovycConfig.listFiles", {
                 javac source: groovycConfig.sourceCompatibility, target: groovycConfig.targetCompatibility, debug: groovycConfig.debug ? 'on' : 'off'
                 classpath {
                     groovycConfig.classpath.each {
