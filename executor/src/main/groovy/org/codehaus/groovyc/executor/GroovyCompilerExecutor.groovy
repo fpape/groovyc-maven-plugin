@@ -27,25 +27,33 @@ import org.apache.maven.plugin.logging.SystemStreamLog
  * To change this template use File | Settings | File Templates.
  */
 class GroovyCompilerExecutor {
-    private Log log = new SystemStreamLog()
+    private final Log log = new SystemStreamLog()
 
     def doGroovyCompile(GroovycConfiguration groovycConfig) {
         File srcDir = groovycConfig.srcDir
         if (!srcDir.exists()) {
-            log.info("srcDir: '$srcDir ' does not exist, skipping groovy compile")
+            if (log.isInfoEnabled()) {
+                log.info("srcDir: '$srcDir ' does not exist, skipping groovy compile")
+            }
             return
         }
 
         File targetDir = groovycConfig.targetDir
         if (!targetDir.exists()) {
-            log.debug("targetDir: '$targetDir' does not exist -> creating targetDir")
+            if (log.isInfoEnabled()) {
+                log.info("targetDir: '$targetDir' does not exist -> creating targetDir")
+            }
             boolean mkdirSuccess = targetDir.mkdirs()
             if (!mkdirSuccess) {
-                log.info("creating targetDir: '$targetDir' failed, skipping groovy compile")
+                if (log.isWarnEnabled()) {
+                    log.warn("creating targetDir: '$targetDir' failed, skipping groovy compile")
+                }
                 return
             }
 
-            log.debug("targetDir created")
+            if (log.isDebugEnabled()) {
+                log.debug("targetDir created")
+            }
         }
 
         new AntBuilder(new AntProject()).sequential {

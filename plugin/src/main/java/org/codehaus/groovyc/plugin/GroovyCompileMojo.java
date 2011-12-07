@@ -57,7 +57,10 @@ public class GroovyCompileMojo extends AbstractGroovyMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        project.addCompileSourceRoot(mainSrcDir.getPath());
+        this.project.addCompileSourceRoot(mainSrcDir.getAbsolutePath());
+        if (getLog().isDebugEnabled()) {
+            getLog().debug("Groovy source directory: " + mainSrcDir + " added.");
+        }
         super.execute();
     }
 }

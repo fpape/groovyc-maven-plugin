@@ -62,7 +62,11 @@ public class GroovyTestCompileMojo extends AbstractGroovyMojo {
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        project.addTestCompileSourceRoot(testSrcDir.getPath());
+        this.project.addTestCompileSourceRoot(testSrcDir.getAbsolutePath());
+        if (getLog().isDebugEnabled()) {
+            getLog().debug("Groovy test source directory: " + testSrcDir + " added.");
+        }
+
         if (skip) {
             getLog().info("Not compiling groovy test sources");
         } else {
